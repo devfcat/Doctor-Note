@@ -5,15 +5,18 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Panel_Main : MonoBehaviour
 {
     public Text DateText;
+    public Text PopupText;
     public GameObject ButtonGroup;
     public GameObject PopupWrite;
     public GameObject ClickedButton;
     public Sprite ClickedButtonImage;
     public Sprite NoClickedButtonImage;
+    public Sprite ClickedButtonImage_Today;
 
     public bool IsPopupOpen;
 
@@ -35,6 +38,8 @@ public class Panel_Main : MonoBehaviour
     public int [,] m_month_list;
     public int [] thisYearStartDay_list;
 
+    public string Date;
+
     // 초기화
     void Start()
     {
@@ -47,7 +52,7 @@ public class Panel_Main : MonoBehaviour
 
         thisYearStartDay_list = new int [] {0,0,0,0,0, 0,0,0,0,0, 0,0};
         
-        string Date = System.DateTime.Now.ToString("yyyy.MM.dd");
+        Date = System.DateTime.Now.ToString("yyyy.MM.dd");
         thisDay = int.Parse(Date.Split(".")[2]);
         thisMonth = int.Parse(Date.Split(".")[1]);
         thisYear = int.Parse(Date.Split(".")[0]);
@@ -56,36 +61,67 @@ public class Panel_Main : MonoBehaviour
         //thisMonth = 2;
         //thisYear = 2003;
 
+        m_year = thisYear;
         m_month = thisMonth;
         m_day = thisDay;
 
         DateText.text = thisYear + "년 " + thisMonth + "월";
 
         PopupInit();
+
+        GameManager.Instance.LoadMonthData(thisYear, thisMonth);
+        CalendarInit();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Date != System.DateTime.Now.ToString("yyyy.MM.dd"))
+        {
+            string DateNew = System.DateTime.Now.ToString("yyyy.MM.dd");
+            thisDay = int.Parse(DateNew.Split(".")[2]);
+            thisMonth = int.Parse(DateNew.Split(".")[1]);
+            thisYear = int.Parse(DateNew.Split(".")[0]);
+
+            m_year = thisYear;
+            m_month = thisMonth;
+            m_day = thisDay;
+
+            DateText.text = thisYear + "년 " + thisMonth + "월";
+
+            PopupInit();
+
+            GameManager.Instance.LoadMonthData(thisYear, thisMonth);
+            CalendarInit();
+        }
+
+        GameManager.Instance.thisYear = thisYear;
+        GameManager.Instance.thisMonth = thisMonth;
+        GameManager.Instance.thisDay = thisDay;
+
         DateText.text = thisYear + "년 " + thisMonth + "월";
 
         if (IsPopupOpen)
         {
-            ClickedButton.GetComponent<Image>().sprite = ClickedButtonImage;
+            if (GameManager.Instance.thisDay == m_day)
+            {
+                ClickedButton.GetComponent<Image>().sprite = ClickedButtonImage_Today;
+            }
+            else
+            {
+                ClickedButton.GetComponent<Image>().sprite = ClickedButtonImage;
+            }
         }
         else{
             ClickedButton.GetComponent<Image>().sprite = NoClickedButtonImage;
         }
 
-    }
-
-    void LoadData()
-    {
-
-    }
-
-    void SaveData()
-    {
+        if (PopUpManager.Instance.IsPopupNumChanged == true)
+        {
+            GameManager.Instance.LoadMonthData(thisYear, thisMonth);
+            CalendarInit();
+            PopUpManager.Instance.IsPopupNumChanged = false;
+        }
 
     }
 
@@ -279,6 +315,8 @@ public class Panel_Main : MonoBehaviour
             }
             
         }
+
+        // GameManager.Instance.m_month_list = m_month_list;
         
         
 
@@ -294,10 +332,10 @@ public class Panel_Main : MonoBehaviour
         {
             day = EventSystem.current.currentSelectedGameObject.transform.Find("Day").gameObject.GetComponent<Text>().text;
         } else {}
+        thisDay = int.Parse(day);
         ClickedButton = EventSystem.current.currentSelectedGameObject.gameObject;
         ClickedButton.GetComponent<Image>().sprite = ClickedButtonImage;
-        PopupWrite.transform.Find("DateBar").transform.Find("Date").gameObject.GetComponent<Text>().text = 
-            thisMonth + "월 " + day + "일";
+        PopupText.text = thisMonth + "월 " + day + "일";
         OpenPopupWrite();
     }
 
@@ -305,10 +343,57 @@ public class Panel_Main : MonoBehaviour
     {
         CalendarMaking(thisYear, thisMonth);
 
-        PopupWrite.transform.Find("DateBar").transform.Find("Date").gameObject.GetComponent<Text>().text = 
-            thisMonth + "월 " + thisDay + "일";
+        PopupText.text = thisMonth + "월 " + thisDay + "일";
         ClickedButton = ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+thisDay-1)).gameObject;
-        OpenPopupWrite();
+        IsPopupOpen = true;
+        //OpenPopupWrite();
+    }
+
+    public void CalendarInit()
+    {
+        for(int j = 0; j < 6; j++)
+        {
+            for(int i=0; i <7; i++)
+            {
+                int day = int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("Day").gameObject.GetComponent<Text>().text);
+                //Debug.Log(day);
+                int hownum;
+                // Debug.Log(GameManager.Instance.m_month_data_list.Length);
+                if (day != 0)
+                {
+                    hownum = GameManager.Instance.m_month_data_list[day-1]; // 이번 달의 그 날짜에 저장된 횟수
+                }
+                else
+                {
+                    hownum = 0;
+                }
+                
+                if (hownum >= 3)
+                {
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG3").gameObject.SetActive(true);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG2").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG1").gameObject.SetActive(false);
+                }
+                else if (hownum == 2)
+                {
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG3").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG2").gameObject.SetActive(true);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG1").gameObject.SetActive(false);
+                }
+                else if ( hownum == 1)
+                {
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG3").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG2").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG1").gameObject.SetActive(true);
+                }
+                else
+                {
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG3").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG2").gameObject.SetActive(false);
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(i+j*7)).transform.Find("howMuchIMG1").gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
 
@@ -326,7 +411,11 @@ public class Panel_Main : MonoBehaviour
     }
 
     public void OnclickNextMonth()
-    {
+    {   
+        for (int i = 0; i < 36; i++) // 버튼 이미지 초기화
+        {
+            ButtonGroup.transform.GetChild(i).gameObject.GetComponent<Image>().sprite = NoClickedButtonImage;
+        }
         ClosePopupWrite();
         if (thisMonth == 12){
             thisMonth = 1;
@@ -342,14 +431,20 @@ public class Panel_Main : MonoBehaviour
         {
             thisDay = m_day;
             ClickedButton = ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+thisDay-1)).gameObject;
-            PopupWrite.transform.Find("DateBar").transform.Find("Date").gameObject.GetComponent<Text>().text = 
-                thisMonth + "월 " + thisDay + "일";
-            OpenPopupWrite();
+            PopupText.text = thisMonth + "월 " + thisDay + "일";
+            //OpenPopupWrite();
+            IsPopupOpen = true;
         }
+        GameManager.Instance.LoadMonthData(thisYear, thisMonth);
+        CalendarInit();
     }
 
     public void OnclickPrevMonth()
     {
+        for (int i = 0; i < 36; i++) // 버튼 이미지 초기화
+        {
+            ButtonGroup.transform.GetChild(i).gameObject.GetComponent<Image>().sprite = NoClickedButtonImage;
+        }
         ClosePopupWrite();
         if (thisMonth == 1)
         {
@@ -366,10 +461,12 @@ public class Panel_Main : MonoBehaviour
         {
             thisDay = m_day;
             ClickedButton = ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+thisDay-1)).gameObject;
-            PopupWrite.transform.Find("DateBar").transform.Find("Date").gameObject.GetComponent<Text>().text = 
-                thisMonth + "월 " + thisDay + "일";
-            OpenPopupWrite();
+            PopupText.text = thisMonth + "월 " + thisDay + "일";
+            //OpenPopupWrite();
+            IsPopupOpen = true;
         }
+        GameManager.Instance.LoadMonthData(thisYear, thisMonth);
+        CalendarInit();
     }
 
 

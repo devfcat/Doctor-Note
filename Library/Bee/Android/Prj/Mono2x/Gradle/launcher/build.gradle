@@ -5,19 +5,17 @@ dependencies {
     }
 
 android {
-    ndkPath "D:/unity/2022.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK"
-
-    compileSdkVersion 32
-    buildToolsVersion '32.0.0'
+    compileSdkVersion 33
+    buildToolsVersion '30.0.2'
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 32
+        minSdkVersion 24
+        targetSdkVersion 33
         applicationId 'com.GiantCat'
         ndk {
             abiFilters 'armeabi-v7a'
@@ -28,12 +26,12 @@ android {
 
     aaptOptions {
         noCompress = ['.unity3d', '.ress', '.resource', '.obb', '.bundle', '.unityexp'] + unityStreamingAssets.tokenize(', ')
-        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
     }
 
     signingConfigs {
         release {
-            storeFile file('D:/unityProject/DoctorNote/Doctor-Note/Android_KEY.keystore')
+            storeFile file('C:/Project/DoctorNote/Doctor Note/Android_KEY.keystore')
             storePassword '123456'
             keyAlias '123456'
             keyPassword '123456'
