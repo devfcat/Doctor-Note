@@ -31,10 +31,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('C:/Project/DoctorNote/Doctor Note/Android_KEY.keystore')
-            storePassword '123456'
-            keyAlias '123456'
-            keyPassword '123456'
+            storeFile file('C:/Project/DoctorNote/Doctor Note/key.keystore')
+            storePassword '123123'
+            keyAlias '123123'
+            keyPassword '123123'
         }
     }
 

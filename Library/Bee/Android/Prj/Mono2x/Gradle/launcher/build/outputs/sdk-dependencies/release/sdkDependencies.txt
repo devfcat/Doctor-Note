@@ -2,30 +2,13 @@
 # For more information visit: https://d.android.com/r/tools/dependency-metadata
 
 library {
-  maven_library {
-    artifactId: "googlemobileads-unity"
-  }
   digests {
-    sha256: "-\376{\321\272\200\303<dA\247O\370\340\204\247\330y\312\235Gi.\\:\253[K\016\320\265\035"
+    sha256: "\303\254\327\324\004\213\375D\001\371\\8\256(\345\317=9kTe_C\214\274\360\016>\361\321\r\237"
   }
 }
-library {
-  digests {
-    sha256: "\030<\304\226\337Q:\202\375\203\272\215\3744\310\205\006\324\033\237\005\"\234i\033\303\334n~r\020\253"
-  }
+library_dependencies {
 }
 module_dependencies {
   module_name: "base"
   dependency_index: 0
-  dependency_index: 1
-}
-repositories {
-  maven_repo {
-    url: "https://dl.google.com/dl/android/maven2/"
-  }
-}
-repositories {
-  maven_repo {
-    url: "https://repo.maven.apache.org/maven2/"
-  }
 }
