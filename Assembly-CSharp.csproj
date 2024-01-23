@@ -62,10 +62,10 @@
     <Compile Include="Assets\Script\DataManager.cs" />
     <Compile Include="Assets\Script\PopUpManager.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
+    <Compile Include="Assets\Script\Popup.cs" />
     <Compile Include="Assets\Script\SplashStart.cs" />
     <Compile Include="Assets\Script\Panel_Main.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
-    <Compile Include="Assets\Script\Popup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

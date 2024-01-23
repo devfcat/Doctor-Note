@@ -113,10 +113,10 @@ public class Panel_Main : MonoBehaviour
         }
         else{
             ClickedButton.GetComponent<Image>().sprite = NoClickedButtonImage;
-            if (thisMonth == m_month && thisYear == m_year && thisDay == m_day)
+            /*if (thisMonth == m_month && thisYear == m_year && thisDay == m_day)
             {
                 ClickedButton.GetComponent<Image>().sprite = ClickedButtonImage_Today;
-            }
+            }*/
         }
 
         if (PopUpManager.Instance.IsPopupNumChanged == true)
@@ -412,6 +412,7 @@ public class Panel_Main : MonoBehaviour
     {
         IsPopupOpen = false;
         PopupWrite.SetActive(false);
+        ClickedButton.GetComponent<Image>().sprite = NoClickedButtonImage;
     }
 
     public void OnclickNextMonth()
@@ -439,6 +440,7 @@ public class Panel_Main : MonoBehaviour
             //OpenPopupWrite();
             //IsPopupOpen = true;
             ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
+            Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
         }
         GameManager.Instance.LoadMonthData(thisYear, thisMonth);
         CalendarInit();
@@ -462,7 +464,7 @@ public class Panel_Main : MonoBehaviour
         }
         CalendarMaking(thisYear, thisMonth);
 
-        if(thisMonth == m_month && thisYear == m_year)
+        if(thisMonth == m_month && thisYear == m_year )
         {
             thisDay = m_day;
             //ClickedButton = ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+thisDay-1)).gameObject;
@@ -470,6 +472,7 @@ public class Panel_Main : MonoBehaviour
             //OpenPopupWrite();
             //IsPopupOpen = true;
             ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
+            Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
         }
         GameManager.Instance.LoadMonthData(thisYear, thisMonth);
         CalendarInit();
