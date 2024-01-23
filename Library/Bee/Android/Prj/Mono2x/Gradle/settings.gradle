@@ -1,13 +1,24 @@
 pluginManagement {
-    buildscript {
-        repositories {
-            mavenCentral()
-            google()
-        }
-        dependencies {
-            classpath("com.android.tools:r8:4.0.48")
-        }
+    repositories {
+        
+        gradlePluginPortal()
+        google()
+        mavenCentral()
     }
 }
 
 include ':launcher', ':unityLibrary'
+include 'unityLibrary:GoogleMobileAdsPlugin.androidlib'
+
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        
+        google()
+        mavenCentral()
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+    }
+}

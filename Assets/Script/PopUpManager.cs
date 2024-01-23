@@ -16,6 +16,9 @@ public class PopUpManager : MonoBehaviour
 
     public bool IsPopupNumChanged = false;
 
+    public string thisDayMemo;
+    public string clickedDayMemo;
+
     private static PopUpManager _instance;
     public static PopUpManager Instance
     {

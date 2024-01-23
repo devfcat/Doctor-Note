@@ -1,4 +1,7 @@
-#Tue Jan 23 01:22:34 KST 2024
-base.0=C\:\\Project\\DoctorNote\\Doctor Note\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
-path.0=classes.dex
+#Wed Jan 24 01:54:29 KST 2024
+base.1=D\:\\unityProject\\DoctorNote\\Doctor-Note\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes2.dex
+path.1=classes2.dex
+base.0=D\:\\unityProject\\DoctorNote\\Doctor-Note\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
+path.0=classes.dex

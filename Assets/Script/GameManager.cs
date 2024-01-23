@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public int selectedNumData; // 현재 선택한 날짜의 개수 데이터
 
     public int [] m_month_data_list;
+    public int [] m_month_memo_list;
 
     // 인스턴스화
     private static GameManager _instance;
@@ -69,7 +70,15 @@ public class GameManager : MonoBehaviour
                                         0,0,0,0,0,0,0,
                                         0,0,0,0,0,0,0,
                                         0,0,0,0,0,0,0}; // 시작 전 초기화
+    
+        m_month_memo_list = new int [] {0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0}; // 시작 전 초기화
     }
+
 
     private void Update()
     {
@@ -125,6 +134,23 @@ public class GameManager : MonoBehaviour
         GameManager.Instance.selectedNumData = PlayerPrefs.GetInt(dataKey, 0);
     }
 
+    public void LoadOneDayMemo(int thisYear, int thisMonth, int thisDay)
+    {
+        string dataKey_memo = Convert.ToString(GameManager._instance.thisYear)+"."+Convert.ToString(GameManager._instance.thisMonth)+"."+Convert.ToString(GameManager._instance.thisDay)+"Ismemo";
+        try
+        {
+            Popup.Instance.inputField.text = PlayerPrefs.GetString(dataKey_memo);
+            Debug.Log(thisDay + "일: " + PlayerPrefs.GetString(dataKey_memo));
+            PopUpManager.Instance.thisDayMemo = PlayerPrefs.GetString(dataKey_memo);
+        }
+        catch
+        {
+            Debug.Log("데이터가 없어요");
+            PopUpManager.Instance.thisDayMemo = "";
+        }
+
+    }
+
     public void LoadMonthData(int thisYear, int thisMonth)
     {
         for(int i=1; i < 32; i++)
@@ -137,10 +163,28 @@ public class GameManager : MonoBehaviour
             catch // 없으면 0으로 초기화
             {
                 m_month_data_list[i-1] = 0;
+                Debug.Log("초기 데이터 로드 싶해");
             }
         }
     }
 
+    public void LoadMonthMemo(int thisYear, int thisMonth)
+    {
+        for(int i=1; i < 32; i++)
+        {  
+            string dataKey_memo = Convert.ToString(thisYear)+"."+Convert.ToString(thisMonth)+"."+Convert.ToString(i)+"Ismemo";
+            //Debug.Log(dataKey_memo);
+            try // 오늘 날의 데이터가 있다면
+            {
+                m_month_memo_list[i-1] = PlayerPrefs.GetString(dataKey_memo).Length;
+            }
+            catch // 없으면 0으로 초기화
+            {
+                m_month_memo_list[i-1] = 0;
+            }
+        }
+    }
+    
     public void StartData()
     {
         string dataKey = Convert.ToString(GameManager._instance.thisYear)+"."+Convert.ToString(GameManager._instance.thisMonth)+"."+Convert.ToString(GameManager._instance.thisDay)+"num";
@@ -161,8 +205,21 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt(dataKey, PopUpManager.Instance.howMuch);
 
         //Debug.Log(dataKey + ": " + PlayerPrefs.GetInt(dataKey, 0));
-        //dataKey = Convert.ToString(GameManager._instance.thisYear)+"."+Convert.ToString(GameManager._instance.thisMonth)+"."+Convert.ToString(GameManager._instance.thisDay)+"Ismemo";
-        //PlayerPrefs.SetInt(dataKey, PopUpManager.Instance.howMuch);
+    }
+
+    public void SaveMemoData(int thisYear, int thisMonth, int thisDay)
+    {
+        if (PopUpManager.Instance.thisDayMemo != null)
+        {
+            string dataKey_memo = Convert.ToString(GameManager._instance.thisYear)+"."+Convert.ToString(GameManager._instance.thisMonth)+"."+Convert.ToString(GameManager._instance.thisDay)+"Ismemo";
+            PlayerPrefs.SetString(dataKey_memo, PopUpManager.Instance.thisDayMemo);
+            Debug.Log(dataKey_memo + ": " + PlayerPrefs.GetString(dataKey_memo));
+        }
+        else
+        {
+            Debug.Log("입력된 메모가 없습니다.");
+        }
+        
     }
 
     public void DeleteAllData()
