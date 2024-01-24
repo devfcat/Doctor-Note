@@ -141,16 +141,36 @@ public class Panel_Main : MonoBehaviour
             CalendarInit();
             PopUpManager.Instance.IsPopupNumChanged = false;
         }
-            /*
+            
         if (thisMonth == m_month && thisYear == m_year && !IsPopupOpen)
+        {
+            if (m_day == int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).transform.Find("Day").gameObject.GetComponent<Text>().text))
+            {
+                ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite 
+                    = ClickedButtonImage_Today;
+            }
+                
+        }
+        else if (thisMonth == m_month && thisYear == m_year && IsPopupOpen)
+        {
+            if (thisDay == m_day)
             {
                 if (m_day == int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).transform.Find("Day").gameObject.GetComponent<Text>().text))
                 {
                     ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite 
-                    = ClickedButtonImage_Today;
+                        = ClickedButtonImage;
                 }
-                
-            }*/
+            }
+            else
+            {
+                if (m_day == int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).transform.Find("Day").gameObject.GetComponent<Text>().text))
+                {
+                    ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite 
+                        = ClickedButtonImage_Today;
+                }
+            }
+            
+        }
 
     }
 

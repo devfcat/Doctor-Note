@@ -68,7 +68,15 @@ public class Popup : MonoBehaviour
     private void Function_InputField_EndEdit(string _data)
     {
         string txt = _data;
-        PopUpManager.Instance.thisDayMemo = txt;
+        try
+        {
+            PopUpManager.Instance.thisDayMemo = txt;
+        }
+        catch
+        {
+            PopUpManager.Instance.thisDayMemo = PopUpManager.Instance.thisDayMemo;
+        }
+        
         // Debug.Log("InputField EndEdit!\n" + txt);
         //inputField.text = "";
     }
