@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         m_state = eState.Panel_Main;
         Application.targetFrameRate = 60;
+        Application.runInBackground = true;
 
         m_month_data_list = new int [] {0,0,0,0,0,0,0,
                                         0,0,0,0,0,0,0,
