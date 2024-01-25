@@ -18,6 +18,16 @@ public class Panel_Main : MonoBehaviour
     public Sprite NoClickedButtonImage;
     public Sprite ClickedButtonImage_Today;
 
+    [Header("# Sliding Menu")]
+
+    public GameObject SlidingMenuObj;
+    public GameObject Panel_Notice;
+
+    public GameObject SlidingAlpha;
+    public GameObject SlidingContent;
+    public ScrollRect scrollRect;
+    public float slidingPos_x = 600f;
+
     public bool IsPopupOpen;
 
     [Header("# Now Date Info")]
@@ -40,9 +50,12 @@ public class Panel_Main : MonoBehaviour
 
     public string Date;
 
+
     // 초기화
     void Start()
     {
+        //scrollRect.onValueChanged.AddListener(OnScroll);
+
         m_month_list = new int [,] {{0,0,0,0,0,0,0},
                                     {0,0,0,0,0,0,0},
                                     {0,0,0,0,0,0,0},
@@ -83,6 +96,7 @@ public class Panel_Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //Debug.Log(m_day);
         if (Date != System.DateTime.Now.ToString("yyyy.MM.dd"))
         {
@@ -563,5 +577,43 @@ public class Panel_Main : MonoBehaviour
         MemoInit();
     }
 
+    public void OnclickHamburger_Open()
+    {
+        SlidingAlpha.SetActive(true);
+        SlidingMenuObj.SetActive(true);  
+        Debug.Log("슬라이딩 메뉴 오픈 완료");
+    }
+
+    public void OnclickHamburger_Close()
+    {
+        SlidingAlpha.SetActive(false);
+        SlidingMenuObj.SetActive(false);
+        Debug.Log("슬라이딩 메뉴 닫음");
+    }
+
+    public void OnclickExit()
+    {
+        Application.Quit();
+        Debug.Log("앱 닫음");
+    }
+
+    private void OnScroll(Vector2 position)
+    {			
+		if (scrollRect.content.anchoredPosition.x >= 0)
+        {
+            scrollRect.movementType = ScrollRect.MovementType.Elastic;
+        }
+        /*
+        else if (scrollRect.content.anchoredPosition.x < -480f)
+		{
+            scrollRect.content.anchoredPosition = new Vector2( // 화면 끝에서 더 가지 않도록 만듦
+				-480f, scrollRect.content.anchoredPosition.y);
+        }
+        */
+		else
+		{
+            scrollRect.movementType = ScrollRect.MovementType.Unrestricted;			
+        }
+    }
 
 }
