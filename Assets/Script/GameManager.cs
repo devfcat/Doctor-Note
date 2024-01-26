@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
             catch // 없으면 0으로 초기화
             {
                 m_month_data_list[i-1] = 0;
-                Debug.Log("초기 데이터 로드 싶해");
+                Debug.Log("초기 데이터 로드 실패");
             }
         }
     }

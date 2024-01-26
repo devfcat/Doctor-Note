@@ -18,6 +18,9 @@ public class Panel_Main : MonoBehaviour
     public Sprite NoClickedButtonImage;
     public Sprite ClickedButtonImage_Today;
 
+    [Header("# Info")]
+    public GameObject Panel_Info;
+
     [Header("# Sliding Menu")]
 
     public GameObject SlidingMenuObj;
@@ -532,7 +535,7 @@ public class Panel_Main : MonoBehaviour
             //OpenPopupWrite();
             //IsPopupOpen = true;
             ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
-            Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
+           // Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
         }
         GameManager.Instance.LoadMonthData(thisYear, thisMonth);
         CalendarInit();
@@ -569,7 +572,7 @@ public class Panel_Main : MonoBehaviour
             //OpenPopupWrite();
             //IsPopupOpen = true;
             ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
-            Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
+            //Debug.Log("이번달: " + "DayButton"+ Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1));
         }
         GameManager.Instance.LoadMonthData(thisYear, thisMonth);
         CalendarInit();
@@ -581,20 +584,38 @@ public class Panel_Main : MonoBehaviour
     {
         SlidingAlpha.SetActive(true);
         SlidingMenuObj.SetActive(true);  
-        Debug.Log("슬라이딩 메뉴 오픈 완료");
+        //Debug.Log("슬라이딩 메뉴 오픈 완료");
     }
 
     public void OnclickHamburger_Close()
     {
         SlidingAlpha.SetActive(false);
         SlidingMenuObj.SetActive(false);
-        Debug.Log("슬라이딩 메뉴 닫음");
+        //Debug.Log("슬라이딩 메뉴 닫음");
     }
 
     public void OnclickExit()
     {
         Application.Quit();
-        Debug.Log("앱 닫음");
+        //Debug.Log("앱 닫음");
+    }
+
+    public void OnclickNotice()
+    {
+        Panel_Notice.SetActive(true);
+    }
+
+    public void OnclickNotice_Close()
+    {
+        Panel_Notice.SetActive(false);
+    }
+    public void OnclickInfo()
+    {
+        Panel_Info.SetActive(true);
+    }
+    public void OnclickInfo_Close()
+    {
+        Panel_Info.SetActive(false);
     }
 
     private void OnScroll(Vector2 position)
