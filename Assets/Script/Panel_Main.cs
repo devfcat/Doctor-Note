@@ -161,10 +161,11 @@ public class Panel_Main : MonoBehaviour
             
         if (thisMonth == m_month && thisYear == m_year && !IsPopupOpen)
         {
-            if (m_day == int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).transform.Find("Day").gameObject.GetComponent<Text>().text))
+            if (GameManager.Instance.thisDay == int.Parse(ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).transform.Find("Day").gameObject.GetComponent<Text>().text))
             {
                 ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite 
                     = ClickedButtonImage_Today;
+                //Debug.Log("1 켜짐");
             }
                 
         }
@@ -184,6 +185,7 @@ public class Panel_Main : MonoBehaviour
                 {
                     ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[m_month-1]+m_day-1)).gameObject.GetComponent<Image>().sprite 
                         = ClickedButtonImage_Today;
+                    //Debug.Log("2 켜짐");
                 }
             }
             
@@ -409,7 +411,8 @@ public class Panel_Main : MonoBehaviour
     public void PopupInit()
     {
         PopupText.text = thisMonth + "월 " + thisDay + "일";
-        ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+m_day)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
+        //ButtonGroup.transform.Find("DayButton"+Convert.ToString(thisYearStartDay_list[thisMonth-1]+m_day)).gameObject.GetComponent<Image>().sprite = ClickedButtonImage_Today;
+        //Debug.Log(thisYearStartDay_list[thisMonth-1]+m_day + "번 켜짐");
     }
 
     public void CalendarInit()

@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
     {
         // SetState();
 
-#if (UNITY_ANDROID) || UNITY_EDITOR
+#if (UNITY_ANDROID) || UNITY_EDITOR || UNITY_IOS
         if (Input.GetKeyUp(KeyCode.Escape))
             {
                 OnClickBack(m_state);
